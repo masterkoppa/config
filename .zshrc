@@ -5,6 +5,9 @@ if [[ "$unamestr" == 'Linux' ]]; then
 	platform='linux'
 elif [[ "$unamestr" == 'Darwin' ]]; then
 	platform='darwin'
+else 
+	echo "Unknown platform, can't run config"
+	return
 fi
 
 # Read the antigen loader
