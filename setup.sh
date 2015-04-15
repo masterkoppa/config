@@ -24,4 +24,4 @@ git submodule update
 # If there is a conflict the existing one will be backed up and the new
 # one will take its place
 replace_config '.zshrc'
-
+replace_config '.gitconfig'
