@@ -1,0 +1,10 @@
+[user]
+	email = andresruiz2010@gmail.com
+	name = Andres Ruiz
+[push]
+	default = simple
+[core]
+[color]
+	ui = true
+[core]
+	editor = vim
