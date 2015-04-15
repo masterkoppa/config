@@ -102,6 +102,7 @@ if [[ $platform == 'linux' ]]; then
 
 	LANG=en_US.utf8
 
+	# Emulate the open command in linux
 	alias 'open'='xdg-open'
 fi
 
@@ -112,6 +113,6 @@ export CXX=/usr/bin/clang++
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 # export PYTHONPATH=/usr/lib/python3.3/site-packages
 
-# Emulate the open command in linux
+# Pretty printing of the git graph
 alias lola='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 
