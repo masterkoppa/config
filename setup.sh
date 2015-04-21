@@ -13,7 +13,7 @@ function replace_config {
 		mv ~/"$1" ~/"$1".bck
 	fi
 
-	ln-s `pwd`/"$1" ~/"$1".bck
+	ln -s `pwd`/"$1" ~/"$1"
 }
 
 
@@ -24,4 +24,4 @@ git submodule update
 # If there is a conflict the existing one will be backed up and the new
 # one will take its place
 replace_config '.zshrc'
-replace_config '.gitconfig'
+#replace_config '.gitconfig'
