@@ -11,35 +11,71 @@ else
 fi
 
 # Read the antigen loader
-source /home/andres/.config_git/antigen/antigen.zsh
+#source /home/andres/.config_git/antigen/antigen.zsh
 
-# Load up oh my zsh
-antigen use oh-my-zsh
+# Source the zgen plugin manager
+source "${HOME}/.config_git/zgen/zgen.zsh"
 
-# Load plugins
+# NOTE: Everything inside this block will only be called after an update or
+#       on init. Any heavy plugins should got here, light things that should
+#       change on the enviorment can be placed outside.
+if ! zgen saved; then
+   echo "Initializing zsh plugins"
+   
+   # Load oh-my-zsh in
+   zgen oh-my-zsh
+   
+   # Git related plugins
+   zgen oh-my-zsh plugins/git
+   zgen oh-my-zsh plugins/git-extras
+   
+   zgen oh-my-zsh plugins/command-not-found
+   zgen oh-my-zsh plugins/nyan
+   zgen oh-my-zsh plugins/virtualenv
+   zgen oh-my-zsh plugins/virtualenvwrapper
+   #zgen oh-my-zsh plugins/rbenv
+   #zgen oh-my-zsh plugins/rvm
+   #zgen oh-my-zsh plugins/last-working-dir
 
-# Oh-my-zsh plugins
-antigen bundle git
-antigen bundle git-extras
-antigen bundle command-not-found
-antigen bundle nyan
-antigen bundle virtualenv
-antigen bundle rvm
-#antigen bundle last-working-dir
+   # Platform specific plugins
+   if [[ $platform == 'linux' ]]; then
+	zgen oh-my-zsh plugins/systemd
+	zgen oh-my-zsh plugins/archlinux
+   elif [[ $platform == 'darwin' ]]; then
+	zgen oh-my-zsh plugins/brew
+	zgen oh-my-zsh plugins/osx
+   fi
 
-# Platform specific plugins
-if [[ $platform == 'linux' ]]; then
-	antigen bundle systemd
-	antigen bundle archlinux
-elif [[ $platform == 'darwin' ]]; then
-	antigen bundle brew
-	antigen bundle osx
+
+   # ZSH Users Plugins
+   zgen load zsh-users/zsh-syntax-highlighting
+   zgen load zsh-users/zsh-completions src
+   zgen load zsh-users/zsh-history-substring-search
+
+   zgen save
 fi
 
-# ZSH-Users Plugins
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions src
-antigen bundle zsh-users/zsh-history-substring-search
+# Settings for local and remote sessions
+# We will configure the theme to not require any
+# fancy fonts when coming through ssh
+if [[ -n $SSH_CONNECTION ]]; then
+   # Setup the editor of choice
+   export EDITOR='vim'
+
+   zgen oh-my-zsh themes/blinks
+
+else
+   # Setup the editor of choice
+   export EDITOR='vim'
+   
+   # Powerline powered theme - Looks really nice, provides a good deal of info
+   zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+   
+   # Solarized Tweaks
+   # Adds coloring to directory listings in ls, makes using solarized actually nice
+   zgen load "joel-porquet/zsh-dircolors-solarized"
+   setupsolarized dircolors.256dark
+fi
 
 # Theme Setup
 
@@ -49,19 +85,16 @@ antigen bundle zsh-users/zsh-history-substring-search
 #antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
 
 # Powerline powered theme - Looks really nice, provides a good deal of info
-antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+# antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 
 # Simple theme - No external requirements
-#antigen theme blinks
+# antigen theme blinks
 
 
 # Solarized Tweaks
 # Adds coloring to directory listings in ls, makes using solarized actually nice
-antigen bundle joel-porquet/zsh-dircolors-solarized.git
-setupsolarized dircolors.256dark
-
-# Apply antigen settings!
-antigen apply
+#antigen bundle joel-porquet/zsh-dircolors-solarized.git
+#setupsolarized dircolors.256dark
 
 # General config settings, here from the old oh-my-zsh days
 
@@ -90,13 +123,6 @@ COMPLETION_WAITING_DOTS="true"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 export DEFAULT_USER='andres'
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='vim'
-fi
-
 if [[ $platform == 'linux' ]]; then
 	# Compilation flags
 	export ARCHFLAGS="-arch x86_64"
@@ -120,5 +146,4 @@ export CXX=/usr/bin/clang++
 # Pretty printing of the git graph
 alias lola='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 
-source ~/.rvm/scripts/rvm
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+eval "$(rbenv init --no-rehash - zsh)"
