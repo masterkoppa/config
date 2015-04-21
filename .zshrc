@@ -24,6 +24,7 @@ antigen bundle git-extras
 antigen bundle command-not-found
 antigen bundle nyan
 antigen bundle virtualenv
+antigen bundle rvm
 #antigen bundle last-working-dir
 
 # Platform specific plugins
@@ -119,3 +120,5 @@ export CXX=/usr/bin/clang++
 # Pretty printing of the git graph
 alias lola='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 
+source ~/.rvm/scripts/rvm
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
