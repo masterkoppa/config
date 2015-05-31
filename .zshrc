@@ -51,6 +51,9 @@ if ! zgen saved; then
    zgen load zsh-users/zsh-syntax-highlighting
    zgen load zsh-users/zsh-completions src
    zgen load zsh-users/zsh-history-substring-search
+   
+   # ZSH Autosuggestions
+   zgen load tarruda/zsh-autosuggestions autosuggestions.zsh
 
    zgen save
 fi
@@ -58,7 +61,7 @@ fi
 # Settings for local and remote sessions
 # We will configure the theme to not require any
 # fancy fonts when coming through ssh
-if [[ -n $SSH_CONNECTION ]]; then
+if [[ (-n $SSH_CONNECTION || -o login) ]]; then
    # Setup the editor of choice
    export EDITOR='vim'
 
@@ -76,6 +79,13 @@ else
    zgen load "joel-porquet/zsh-dircolors-solarized"
    setupsolarized dircolors.256dark
 fi
+
+# Enable zsh-history-substring-search
+# See: https://github.com/zsh-users/zsh-history-substring-search
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+
 
 # Theme Setup
 
@@ -130,7 +140,7 @@ if [[ $platform == 'linux' ]]; then
 	# Set the ssh agent
 	export SSH_ASKPASS="/etc/profile.d/ksshaskpass.sh"
 
-	LANG=en_US.utf8
+	LANG=en_US.UTF-8
 
 	# Emulate the open command in linux
 	alias 'open'='xdg-open'
@@ -147,3 +157,14 @@ export CXX=/usr/bin/clang++
 alias lola='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 
 eval "$(rbenv init --no-rehash - zsh)"
+
+# Enable autosuggestions automatically
+zle-line-init() {
+    zle autosuggest-start
+}
+
+zle -N zle-line-init
+
+# use ctrl+t to toggle autosuggestions(hopefully this wont be needed as
+# zsh-autosuggestions is designed to be unobtrusive)
+bindkey '^T' autosuggest-toggle
