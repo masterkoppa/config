@@ -189,3 +189,9 @@ zle -N zle-line-init
 # use ctrl+t to toggle autosuggestions(hopefully this wont be needed as
 # zsh-autosuggestions is designed to be unobtrusive)
 bindkey '^T' autosuggest-toggle
+
+
+# Auto load any custom system configs form .custom_zshrc
+if [[ -e "${HOME}/.config_git/.custom_zshrc" ]]; then
+   source "${HOME}/.config_git/.custom_zshrc"
+fi
