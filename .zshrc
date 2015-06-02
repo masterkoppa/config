@@ -25,25 +25,34 @@ if ! zgen saved; then
    # Load oh-my-zsh in
    zgen oh-my-zsh
    
-   # Git related plugins
-   zgen oh-my-zsh plugins/git
-   zgen oh-my-zsh plugins/git-extras
+   if hash git &>/dev/null; then
+      # Git related plugins
+      zgen oh-my-zsh plugins/git
+      zgen oh-my-zsh plugins/git-extras
+   fi
+
    
-   zgen oh-my-zsh plugins/command-not-found
    zgen oh-my-zsh plugins/nyan
    zgen oh-my-zsh plugins/virtualenv
-   zgen oh-my-zsh plugins/virtualenvwrapper
+
+   # Disable if virtualenv wrapper is not installed and initialized
+   # Any suggestions on how to better detect are welcome
+   if [ -d "$HOME/.virtualenvs" ]; then
+      zgen oh-my-zsh plugins/virtualenvwrapper
+   fi
+   
    #zgen oh-my-zsh plugins/rbenv
    #zgen oh-my-zsh plugins/rvm
    #zgen oh-my-zsh plugins/last-working-dir
 
    # Platform specific plugins
    if [[ $platform == 'linux' ]]; then
-	zgen oh-my-zsh plugins/systemd
-	zgen oh-my-zsh plugins/archlinux
+      zgen oh-my-zsh plugins/command-not-found
+	  zgen oh-my-zsh plugins/systemd
+	  zgen oh-my-zsh plugins/archlinux
    elif [[ $platform == 'darwin' ]]; then
-	zgen oh-my-zsh plugins/brew
-	zgen oh-my-zsh plugins/osx
+	  zgen oh-my-zsh plugins/brew
+	  zgen oh-my-zsh plugins/osx
    fi
 
 
@@ -74,10 +83,18 @@ else
    # Powerline powered theme - Looks really nice, provides a good deal of info
    zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
    
-   # Solarized Tweaks
-   # Adds coloring to directory listings in ls, makes using solarized actually nice
-   zgen load "joel-porquet/zsh-dircolors-solarized"
-   setupsolarized dircolors.256dark
+   # Alias for when using OSX
+   if [[ $platform == 'darwin' ]] && which gdircolors &> /dev/null ; then
+      alias 'dircolors'='gdircolors'
+   fi
+
+   if which dircolors &> /dev/null; then
+      # Solarized Tweaks
+      # Adds coloring to directory listings in ls, makes using solarized actually nice
+      zgen load "joel-porquet/zsh-dircolors-solarized"
+      setupsolarized dircolors.256dark
+   fi
+
 fi
 
 # Enable zsh-history-substring-search
@@ -146,8 +163,10 @@ if [[ $platform == 'linux' ]]; then
 	alias 'open'='xdg-open'
 fi
 
-export CC=/usr/bin/clang
-export CXX=/usr/bin/clang++
+if hash clang &> /dev/null; then
+   export CC=/usr/bin/clang
+   export CXX=/usr/bin/clang++
+fi
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
@@ -156,7 +175,9 @@ export CXX=/usr/bin/clang++
 # Pretty printing of the git graph
 alias lola='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 
-eval "$(rbenv init --no-rehash - zsh)"
+if hash rbenv -h &> /dev/null; then
+   eval "$(rbenv init --no-rehash - zsh)"
+fi
 
 # Enable autosuggestions automatically
 zle-line-init() {
