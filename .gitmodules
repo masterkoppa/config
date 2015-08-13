@@ -1,3 +1,6 @@
 [submodule "zgen"]
 	path = zgen
 	url = https://github.com/tarjoilija/zgen
+[submodule "optional_components/Qt-Creator-Darcula"]
+	path = optional_components/Qt-Creator-Darcula
+	url = git@github.com:mervick/Qt-Creator-Darcula.git
