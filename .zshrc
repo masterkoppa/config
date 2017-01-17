@@ -118,6 +118,7 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 export DEFAULT_USER='andres'
+export BULLETTRAIN_CONTEXT_DEFAULT_USER='andres'
 
 if [[ $platform == 'linux' ]]; then
     # Compilation flags
@@ -165,6 +166,11 @@ if is_installed pyenv; then
     fi
 fi
 
+if is_installed ibus-daemon; then
+    export GTK_IM_MODULE=ibus
+    export XMODIFIERS=@im=ibus
+    export QT_IM_MODULE=ibus
+fi
 
 # Key Bindings
 # Setup a series of keybindings to make it easier to work in the terminal
