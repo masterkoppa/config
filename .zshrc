@@ -93,7 +93,7 @@ else
     export EDITOR='vim'
 
     # Powerline powered theme - Looks really nice, provides a good deal of info
-    zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+    zgen load masterkoppa/bullet-train-oh-my-zsh-theme bullet-train add-battery
 fi
 # Alias for when using OSX
 if [[ $platform == 'darwin' ]] && which gdircolors &> /dev/null ; then
@@ -123,14 +123,23 @@ export BULLETTRAIN_CONTEXT_DEFAULT_USER='andres'
 if [[ $platform == 'linux' ]]; then
     # Compilation flags
     export ARCHFLAGS="-arch x86_64"
-
-    # Set the ssh agent
-    export SSH_ASKPASS="/etc/profile.d/ksshaskpass.sh"
-
     export LANG=en_US.UTF-8
 
     # Emulate the open command in linux
     alias 'open'='xdg-open'
+    if is_installed gpg-agent; then
+
+        # TODO Check for gpg-agent before calling this
+        if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
+            gpg-connect-agent /bye >/dev/null 2>&1
+        fi
+
+        unset SSH_AGENT_PID
+
+        if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+            export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+        fi
+    fi
 fi
 
 if is_installed clang; then
