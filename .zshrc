@@ -37,8 +37,6 @@ if ! zgen saved; then
         zgen oh-my-zsh plugins/git-extras
     fi
 
-
-    zgen oh-my-zsh plugins/nyan
     zgen oh-my-zsh plugins/virtualenv
 
     # Disable if virtualenv wrapper is not installed and initialized
