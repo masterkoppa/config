@@ -51,10 +51,10 @@ if ! zgen saved; then
     
     #zgen oh-my-zsh plugins/rvm
     #zgen oh-my-zsh plugins/last-working-dir
+    zgen oh-my-zsh plugins/command-not-found
 
     # Platform specific plugins
     if [[ $platform == 'linux' ]]; then
-        zgen oh-my-zsh plugins/command-not-found
         zgen oh-my-zsh plugins/systemd
         zgen oh-my-zsh plugins/archlinux
     elif [[ $platform == 'darwin' ]]; then
@@ -91,7 +91,8 @@ else
     export EDITOR='vim'
 
     # Powerline powered theme - Looks really nice, provides a good deal of info
-    zgen load masterkoppa/bullet-train-oh-my-zsh-theme bullet-train add-battery
+    # zgen load masterkoppa/bullet-train-oh-my-zsh-theme bullet-train add-battery
+    zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 fi
 # Alias for when using OSX
 if [[ $platform == 'darwin' ]] && which gdircolors &> /dev/null ; then
