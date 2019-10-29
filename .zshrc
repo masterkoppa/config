@@ -76,6 +76,8 @@ fi
 
 # OH-MY-ZSH Settings
 CASE_SENSITIVE="false"
+DISABLE_UPDATE_PROMPT=true
+DISABLE_AUTO_UPDATE=true
 
 # Settings for local and remote sessions
 # We will configure the theme to not require any
