@@ -66,12 +66,10 @@ if ! zgen saved; then
 
 
     # ZSH Users Plugins
-    zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-completions src
     zgen load zsh-users/zsh-history-substring-search
-
-    # ZSH Autosuggestions
-    zgen load tarruda/zsh-autosuggestions
+    zgen load zsh-users/zsh-autosuggestions
+    zgen load zsh-users/zsh-syntax-highlighting
 
     zgen save
 fi
@@ -80,6 +78,10 @@ fi
 CASE_SENSITIVE="false"
 DISABLE_UPDATE_PROMPT=true
 DISABLE_AUTO_UPDATE=true
+
+# zsh-autosuggestions Settings
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 # Settings for local and remote sessions
 # We will configure the theme to not require any
@@ -233,3 +235,7 @@ zle -N zle-line-finish
 if [[ -e "${HOME}/.config_git/.custom_zshrc" ]]; then
     source "${HOME}/.config_git/.custom_zshrc"
 fi
+
+
+
+    zgen load zsh-users/zsh-syntax-highlighting
