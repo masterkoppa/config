@@ -53,8 +53,6 @@ if ! zgen saved; then
         zgen oh-my-zsh plugins/docker
     fi
     
-    #zgen oh-my-zsh plugins/rvm
-    #zgen oh-my-zsh plugins/last-working-dir
     zgen oh-my-zsh plugins/command-not-found
 
     # Platform specific plugins
