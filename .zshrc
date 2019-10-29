@@ -48,9 +48,11 @@ if ! zgen saved; then
     if is_installed rbenv; then
         zgen oh-my-zsh plugins/rbenv
     fi
+
+    if is_installed docker; then
+        zgen oh-my-zsh plugins/docker
+    fi
     
-    #zgen oh-my-zsh plugins/rvm
-    #zgen oh-my-zsh plugins/last-working-dir
     zgen oh-my-zsh plugins/command-not-found
 
     # Platform specific plugins
@@ -76,6 +78,8 @@ fi
 
 # OH-MY-ZSH Settings
 CASE_SENSITIVE="false"
+DISABLE_UPDATE_PROMPT=true
+DISABLE_AUTO_UPDATE=true
 
 # Settings for local and remote sessions
 # We will configure the theme to not require any
