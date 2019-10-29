@@ -48,6 +48,10 @@ if ! zgen saved; then
     if is_installed rbenv; then
         zgen oh-my-zsh plugins/rbenv
     fi
+
+    if is_installed docker; then
+        zgen oh-my-zsh plugins/docker
+    fi
     
     #zgen oh-my-zsh plugins/rvm
     #zgen oh-my-zsh plugins/last-working-dir
