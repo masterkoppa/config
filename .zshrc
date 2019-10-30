@@ -97,7 +97,6 @@ else
     export EDITOR='vim'
 
     # Powerline powered theme - Looks really nice, provides a good deal of info
-    # zgen load masterkoppa/bullet-train-oh-my-zsh-theme bullet-train add-battery
     zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 fi
 # Alias for when using OSX
