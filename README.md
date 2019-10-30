@@ -14,7 +14,7 @@ place it will be moved and backed up automatically.
     * For certain themes
 
 ### Notes
-Uses antigen to retrive plugins and themes. See [antigen](https://github.com/zsh-users/antigen) for more info.
+Uses zgen to retrive plugins and themes. See [zgen](https://github.com/tarjoilija/zgen) for more info.
 
 ## .gitconfig
 ### Requirements
